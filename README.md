@@ -22,4 +22,4 @@ docker ps -a
 ```
 
 Leitura Relevante:
-![psql-basico](https://hasura.io/blog/top-psql-commands-and-flags-you-need-to-know-postgresql)
+[psql-basico](https://hasura.io/blog/top-psql-commands-and-flags-you-need-to-know-postgresql)
