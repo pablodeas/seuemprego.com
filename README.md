@@ -21,5 +21,13 @@ newgrp docker
 docker ps -a
 ```
 
-Leitura Relevante:
+A utilização do banco de dados está sendo automatizada no arquivo source.py.
+
+O arquivo migrations.sql é o principal para mudanças na produção.
+
+---
+
+Leituras Relevantes:
+
 [psql-basico](https://hasura.io/blog/top-psql-commands-and-flags-you-need-to-know-postgresql)
+[psycopg2-docs](https://www.psycopg.org/docs/usage.html#)
