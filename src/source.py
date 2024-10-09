@@ -22,6 +22,7 @@ def exec_normal(sql):
     with psy.connect(host=HOST, database=DATABASE, user=USER, password=PASSWORD) as conn:
         with conn.cursor() as cur:
             cur.execute(sql)
+            return cur.fetchall()
 
 def new_pass():
     quanti = 8

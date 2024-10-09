@@ -6,8 +6,8 @@ a = source.new_pass()
 sql = f"""
         CREATE USER {login} WITH PASSWORD '{a}';
         GRANT USAGE ON SCHEMA public TO {login};
-        GRANT SELECT ON ALL TABLES IN SCHEMA public TO {login};
         """
+        #GRANT SELECT ON ALL TABLES IN SCHEMA public TO {login};
 
 if __name__ == "__main__":
     try:

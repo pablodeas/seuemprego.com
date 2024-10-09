@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Vagas</title>
+</head>
+<body>
+    <h1>Vagas Disponíveis</h1>
+    {% for vaga in vagas %}
+        <h2>{{vaga.Titulo}}</h2>
+        <p>{{vaga.Descricao}}</p>
+        <p>{{vaga.Criacao}}</p>
+        <p>{{vaga.Contato}}</p>
+    {% endfor %}
+</body>
+</html>
