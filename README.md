@@ -1,5 +1,8 @@
 # seuemprego.com
 
+### Live
+A produção do projeto será feito na plataforma [PythonAnywhere](https://pythonanywhere.com/)
+
 Para funcionar, necessário instalar:
 - docker >= 27.2
 - python3 >= 3.10
