@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SeuEmprego.com - Vagas de Emprego</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: 4px solid #ff6b35;
+        }
+        
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1em;
+            opacity: 0.9;
+        }
+        
+        .btn-adicionar {
+            display: inline-block;
+            background-color: #ff6b35;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            margin: 30px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        }
+        
+        .btn-adicionar:hover {
+            background-color: #e55a28;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        
+        .vagas-container {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .vaga-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .vaga-card:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+            transform: translateY(-2px);
+        }
+        
+        .vaga-header {
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .vaga-titulo {
+            font-size: 1.5em;
+            color: #ff6b35;
+            margin-bottom: 8px;
+        }
+        
+        .vaga-cargo {
+            font-size: 1.1em;
+            color: #666;
+            font-weight: 500;
+        }
+        
+        .vaga-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .info-label {
+            font-weight: bold;
+            color: #555;
+        }
+        
+        .vaga-descricao {
+            margin: 15px 0;
+            color: #666;
+            line-height: 1.8;
+        }
+        
+        .vaga-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .btn-detalhes {
+            background-color: #ff6b35;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        
+        .btn-detalhes:hover {
+            background-color: #e55a28;
+        }
+        
+        .data-postagem {
+            color: #999;
+            font-size: 0.9em;
+        }
+        
+        .mensagem {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 5px;
+            text-align: center;
+        }
+        
+        .mensagem.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .mensagem.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .nenhuma-vaga {
+            text-align: center;
+            padding: 60px 20px;
+            color: #999;
+        }
+        
+        .nenhuma-vaga h2 {
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+        
+        .badge-remoto {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge-hibrido {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .badge-presencial {
+            background-color: #f3e5f5;
+            color: #7b1fa2;
+        }
+        
+        .btn-topo {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ff6b35;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+        
+        .btn-topo:hover {
+            background-color: #e55a28;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.4);
+        }
+        
+        .btn-topo.visible {
+            display: flex;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>🎯 SeuEmprego.com</h1>
+        <p class="subtitle">Encontre a vaga ideal para você</p>
+    </header>
+
+    <div class="container">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="mensagem {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <div style="text-align: center;">
+            <a href="{{ url_for('nova_vaga') }}" class="btn-adicionar">➕ Adicionar Nova Vaga</a>
+        </div>
+
+        {% if vagas %}
+            <div class="vagas-container">
+                {% for vaga in vagas %}
+                    <div class="vaga-card">
+                        <div class="vaga-header">
+                            <h2 class="vaga-titulo">{{ vaga.titulo_vaga }}</h2>
+                            <p class="vaga-cargo">{{ vaga.cargo }}</p>
+                        </div>
+
+                        <div class="vaga-info">
+                            {% if vaga.forma_trabalho %}
+                                <div class="info-item">
+                                    {% if vaga.forma_trabalho == 'Remoto' %}
+                                        <span class="badge badge-remoto">{{ vaga.forma_trabalho }}</span>
+                                    {% elif vaga.forma_trabalho == 'Híbrido' %}
+                                        <span class="badge badge-hibrido">{{ vaga.forma_trabalho }}</span>
+                                    {% else %}
+                                        <span class="badge badge-presencial">{{ vaga.forma_trabalho }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endif %}
+                            
+                            {% if vaga.local %}
+                                <div class="info-item">
+                                    <span class="info-label">📍 Local:</span>
+                                    <span>{{ vaga.local }}</span>
+                                </div>
+                            {% endif %}
+                            
+                            {% if vaga.regime_contratacao %}
+                                <div class="info-item">
+                                    <span class="info-label">📋 Regime:</span>
+                                    <span>{{ vaga.regime_contratacao }}</span>
+                                </div>
+                            {% endif %}
+                            
+                            {% if vaga.salario %}
+                                <div class="info-item">
+                                    <span class="info-label">💰 Salário:</span>
+                                    <span>{{ vaga.salario }}</span>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        {% if vaga.descricao %}
+                            <div class="vaga-descricao">
+                                {{ vaga.descricao[:200] }}{% if vaga.descricao|length > 200 %}...{% endif %}
+                            </div>
+                        {% endif %}
+
+                        <div class="vaga-footer">
+                            <span class="data-postagem">
+                                Publicada em {{ vaga.created_at.strftime('%d/%m/%Y') }}
+                            </span>
+                            <a href="{{ url_for('detalhes_vaga', vaga_id=vaga.id) }}" class="btn-detalhes">
+                                Ver Detalhes →
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="nenhuma-vaga">
+                <h2>Nenhuma vaga disponível no momento</h2>
+                <p>Seja o primeiro a adicionar uma vaga!</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <button class="btn-topo" id="btnTopo" onclick="voltarAoTopo()" title="Voltar ao topo">↑</button>
+
+    <script>
+        // Mostra/esconde botão de voltar ao topo
+        window.onscroll = function() {
+            const btnTopo = document.getElementById('btnTopo');
+            if (document.body.scrollTop > 300 || document.documentElement.scrollTop > 300) {
+                btnTopo.classList.add('visible');
+            } else {
+                btnTopo.classList.remove('visible');
+            }
+        };
+
+        function voltarAoTopo() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Alert de primeiro acesso do dia
+        function verificarPrimeiroAcessoDoDia() {
+            const hoje = new Date().toDateString();
+            const ultimoAcesso = localStorage.getItem('ultimoAcessoSeuEmprego');
+            
+            if (ultimoAcesso !== hoje) {
+                alert('⚠️ Aviso: Todas as vagas são apagadas semanalmente.');
+                localStorage.setItem('ultimoAcessoSeuEmprego', hoje);
+            }
+        }
+
+        // Executa verificação ao carregar a página
+        window.addEventListener('DOMContentLoaded', verificarPrimeiroAcessoDoDia);
+    </script>
+</body>
+</html>

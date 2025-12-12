@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nova Vaga - SeuEmprego.com</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: white;
+            padding: 30px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+            border-bottom: 4px solid #ff6b35;
+            margin-bottom: 30px;
+        }
+        
+        h1 {
+            font-size: 2em;
+        }
+        
+        .form-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        .required {
+            color: #e74c3c;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 5px;
+            font-size: 1em;
+            transition: border-color 0.3s ease;
+            font-family: inherit;
+        }
+        
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #ff6b35;
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .btn-container {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        .btn {
+            flex: 1;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .btn-submit {
+            background-color: #ff6b35;
+            color: white;
+        }
+        
+        .btn-submit:hover {
+            background-color: #e55a28;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        
+        .btn-voltar {
+            background-color: #2d2d2d;
+            color: white;
+        }
+        
+        .btn-voltar:hover {
+            background-color: #1a1a1a;
+        }
+        
+        .helper-text {
+            font-size: 0.85em;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .btn-container {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>➕ Cadastrar Nova Vaga</h1>
+    </header>
+
+    <div class="container">
+        <div class="form-card">
+            <form action="{{ url_for('adicionar_vaga') }}" method="POST">
+                <div class="form-group">
+                    <label for="titulo_vaga">
+                        Título da Vaga <span class="required">*</span>
+                    </label>
+                    <input type="text" id="titulo_vaga" name="titulo_vaga" required 
+                           placeholder="Ex: Desenvolvedor Full Stack Pleno">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="cargo">
+                            Cargo <span class="required">*</span>
+                        </label>
+                        <input type="text" id="cargo" name="cargo" required 
+                               placeholder="Ex: Desenvolvedor">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="numero_vagas">Número de Vagas</label>
+                        <input type="number" id="numero_vagas" name="numero_vagas" 
+                               value="1" min="1" placeholder="1">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="regime_contratacao">Regime de Contratação</label>
+                        <select id="regime_contratacao" name="regime_contratacao">
+                            <option value="">Selecione...</option>
+                            <option value="CLT">CLT</option>
+                            <option value="PJ">PJ</option>
+                            <option value="Estágio">Estágio</option>
+                            <option value="Temporário">Temporário</option>
+                            <option value="Freelancer">Freelancer</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="forma_trabalho">Forma de Trabalho</label>
+                        <select id="forma_trabalho" name="forma_trabalho">
+                            <option value="">Selecione...</option>
+                            <option value="Presencial">Presencial</option>
+                            <option value="Remoto">Remoto</option>
+                            <option value="Híbrido">Híbrido</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="local">Local</label>
+                    <input type="text" id="local" name="local" 
+                           placeholder="Ex: São Paulo - SP / Remoto">
+                </div>
+
+                <div class="form-group">
+                    <label for="descricao">Descrição da Vaga</label>
+                    <textarea id="descricao" name="descricao" 
+                              placeholder="Descreva as principais responsabilidades e atividades do cargo..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="experiencia_desejada">Experiência Desejada</label>
+                    <input type="text" id="experiencia_desejada" name="experiencia_desejada" 
+                           placeholder="Ex: 3 anos de experiência com Python e Flask">
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="salario">Salário</label>
+                        <input type="text" id="salario" name="salario" 
+                               placeholder="Ex: R$ 5.000,00 - R$ 7.000,00">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="expediente">Expediente</label>
+                        <input type="text" id="expediente" name="expediente" 
+                               placeholder="Ex: Segunda a Sexta, 9h às 18h">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="beneficios">Benefícios</label>
+                    <textarea id="beneficios" name="beneficios" 
+                              placeholder="Ex: Vale-transporte, Vale-refeição, Plano de saúde..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="como_candidatar">Como se Candidatar</label>
+                    <textarea id="como_candidatar" name="como_candidatar" 
+                              placeholder="Instruções para candidatura: enviar currículo para email@exemplo.com..."></textarea>
+                </div>
+
+                <div class="btn-container">
+                    <a href="{{ url_for('index') }}" class="btn btn-voltar">← Voltar</a>
+                    <button type="submit" class="btn btn-submit">✓ Cadastrar Vaga</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
