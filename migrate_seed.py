@@ -25,6 +25,14 @@ def criar_banco():
     print("✓ Tabelas criadas")
 
 
+def criar_estrutura_apenas():
+    """Cria apenas a estrutura das tabelas sem inserir dados"""
+    print("\nCriando apenas a estrutura do banco...")
+    criar_banco()
+    print("\n✓ Estrutura das tabelas criada com sucesso!")
+    print("O banco está pronto, mas vazio (sem vagas).")
+
+
 def gerar_vagas_teste():
     """Gera vagas de teste para popular o banco de dados"""
     
@@ -368,6 +376,7 @@ def main():
     print("Escolha a opção:")
     print("1. Apagar todos os dados")
     print("2. Migração completa (apaga e recria com dados de teste)")
+    print("3. Criar apenas estrutura (tabelas vazias)")
     print("0. Cancelar")
     
     opt = input("\n-> ")
@@ -404,6 +413,38 @@ def main():
                 print("\nVocê pode agora executar o servidor Flask com: python main.py\n")
             except Exception as e:
                 print(f"\n✗ Erro na migração: {e}")
+        else:
+            print("\nOperação cancelada.")
+    
+    elif opt == "3":
+        resposta = input("\nEsta opção criará apenas a estrutura do banco (tabelas vazias). Continuar? (s/n): ")
+        if resposta.lower() == 's':
+            print("\nIniciando criação da estrutura...\n")
+            try:
+                # Verifica se existe alguma tabela
+                from sqlalchemy import inspect
+                inspector = inspect(engine)
+                tabelas_existentes = inspector.get_table_names()
+                
+                if tabelas_existentes:
+                    print("⚠️  Tabelas já existem no banco!")
+                    resposta_drop = input("Deseja apagar e recriar as tabelas? (s/n): ")
+                    
+                    if resposta_drop.lower() == 's':
+                        limpar_banco()
+                        criar_estrutura_apenas()
+                    else:
+                        print("\nOperação cancelada.")
+                else:
+                    criar_estrutura_apenas()
+                    
+                print("\n✓ Estrutura do banco criada com sucesso!")
+                print("\nAgora você pode:")
+                print("1. Executar o servidor Flask para uma aplicação vazia")
+                print("2. Executar este script novamente e escolher opção 2 para adicionar dados de teste")
+                print("3. Começar a inserir vagas manualmente pela aplicação\n")
+            except Exception as e:
+                print(f"\n✗ Erro ao criar estrutura: {e}")
         else:
             print("\nOperação cancelada.")
     
